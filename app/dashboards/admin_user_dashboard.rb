@@ -8,20 +8,20 @@ class AdminUserDashboard < Administrate::BaseDashboard
   # which determines how the attribute is displayed
   # on pages throughout the dashboard.
   ATTRIBUTE_TYPES = {
-    posts: Field::HasMany,
-    id: Field::Number,
-    email: Field::String,
-    password: Field::String,
-    sign_in_count: Field::Number,
-    current_sign_in_at: Field::DateTime,
-    last_sign_in_at: Field::DateTime,
+    posts: Field::HasMany,with_options(searchable: false),
+    id: Field::Number,with_options(searchable: false),
+    email: Field::String,with_options(searchable: true),
+    password: Field::String,with_options(searchable: false),
+    sign_in_count: Field::Number,with_options(searchable: false),
+    current_sign_in_at: Field::DateTime,with_options(searchable: false),
+    last_sign_in_at: Field::DateTime,with_options(searchable: false),
     current_sign_in_ip: Field::String.with_options(searchable: false),
     last_sign_in_ip: Field::String.with_options(searchable: false),
-    first_name: Field::String,
-    last_name: Field::String,
-    type: Field::String,
-    created_at: Field::DateTime,
-    updated_at: Field::DateTime,
+    first_name: Field::String,with_options(searchable: false),
+    last_name: Field::String,with_options(searchable: false),
+    type: Field::String,with_options(searchable: false),
+    created_at: Field::DateTime,with_options(searchable: false),
+    updated_at: Field::DateTime,with_options(searchable: false),
   }.freeze
 
   # COLLECTION_ATTRIBUTES
