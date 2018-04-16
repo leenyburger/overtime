@@ -15,5 +15,11 @@ RSpec.describe Post, type: :model do
       @post.rationale = nil
       expect(@post).to_not be_valid
     end
+
+    it "cannot be created without a status" do
+      @post.status = nil
+      expect(@post).to_not be_valid
+    end
+
   end
 end
