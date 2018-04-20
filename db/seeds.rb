@@ -6,3 +6,5 @@ puts "1 User created"
 end
 
 puts "100 Posts have been created"
+AdminUser.create(email: "admin@example.com", password: "password", password_confirmation: "password", first_name: "Admin", last_name: "Me", type: "AdminUser")
+puts "Created 1 Admin User"
