@@ -10,18 +10,18 @@ describe 'navigate' do
       visit posts_path
     end
     it 'can be reached successfully' do
-		  expect(page.status_code).to eq(200)
+      expect(page.status_code).to eq(200)
     end
 
     it 'has content of Posts' do
-		  expect(page).to have_content(/Posts/)
+      expect(page).to have_content(/Posts/)
     end
 
     it 'has a list of posts' do
       post1 = FactoryGirl.build_stubbed(:post)
-		  post2 = FactoryGirl.build_stubbed(:second_post)
-		  visit posts_path
-		  expect(page).to have_content(/Rationale|content/)
+      post2 = FactoryGirl.build_stubbed(:second_post)
+      visit posts_path
+      expect(page).to have_content(/Rationale|content/)
     end
   end
 
@@ -43,17 +43,17 @@ describe 'navigate' do
     end
 
     it 'can be created from new form page' do
-		  fill_in 'post[date]', with: Date.today
-		  fill_in 'post[rationale]', with: "Some rationale"
-		  click_on "Save"
-		  expect(page).to have_content("Some rationale") #This is the show page
+      fill_in 'post[date]', with: Date.today
+      fill_in 'post[rationale]', with: "Some rationale"
+      click_on "Save"
+      expect(page).to have_content("Some rationale") #This is the show page
     end
 
     it 'will have a user associated with it' do
       fill_in 'post[date]', with: Date.today
-		  fill_in 'post[rationale]', with: "User Association"
-		  click_on "Save"
-		  expect(User.last.posts.last.rationale).to eq("User Association")
+      fill_in 'post[rationale]', with: "User Association"
+      click_on "Save"
+      expect(User.last.posts.last.rationale).to eq("User Association")
     end
 	end
 
