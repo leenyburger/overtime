@@ -29,6 +29,7 @@ gem 'jquery-rails'
 gem "gritter", "1.2.0"
 gem "administrate"
 gem 'bourbon'
+gem 'pundit', '~> 1.1'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
