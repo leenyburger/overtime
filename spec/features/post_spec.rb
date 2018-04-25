@@ -35,11 +35,11 @@ describe 'navigate' do
 
 	describe 'creation' do
     before do
-		  visit new_post_path
+      visit new_post_path
     end
 
     it 'has a new form that can be reached' do
-		  expect(page.status_code).to eq(200)
+      expect(page.status_code).to eq(200)
     end
 
     it 'can be created from new form page' do
@@ -55,7 +55,7 @@ describe 'navigate' do
       click_on "Save"
       expect(User.last.posts.last.rationale).to eq("User Association")
     end
-	end
+  end
 
   describe 'edit' do
     before do
