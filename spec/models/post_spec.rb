@@ -20,6 +20,5 @@ RSpec.describe Post, type: :model do
       @post.status = nil
       expect(@post).to_not be_valid
     end
-
   end
 end
