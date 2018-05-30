@@ -8,7 +8,6 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-<%= js add_gritter(flash[:notice], title: "Overtime App Notification", sticky: false) %>
   <body>
 	<div class="container">
 		<div class="row">
@@ -18,5 +17,8 @@
   		</div>
   	</div>
   </div>
+
+  <%= render 'shared/alerts' %>
+
   </body>
 </html>
