@@ -17,11 +17,15 @@ describe 'navigate' do
       expect(page).to have_content(/Posts/)
     end
 
-    it 'has a list of posts' do
-      post1 = FactoryGirl.build_stubbed(:post)
-      post2 = FactoryGirl.build_stubbed(:second_post)
+    it 'has a scope so that only post creators can see their posts' do
+      post1 = FactoryGirl.create(:post, user: @user)
+      post_from_other_user = FactoryGirl.create(:post, rationale: "This post should not appear", user: FactoryGirl.create(:non_authorized_user))
       visit posts_path
-      expect(page).to have_content(/Rationale|content/)
+      expect(page).to have_content(post1.id)
+      expect(page).to_not have_content(/This post should not appear/)
+    end
+
+    it 'allows admins to see all posts' do
     end
   end
 
@@ -81,7 +85,7 @@ describe 'navigate' do
 
   describe 'delete' do
     it 'can be deleted' do
-      @post = FactoryGirl.create(:post)
+      @post = FactoryGirl.create(:post, user: @user)
       visit posts_path
       click_link("delete_post_#{@post.id}_from_index")
       expect(page.status_code).to eq(200)
