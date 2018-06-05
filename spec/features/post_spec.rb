@@ -1,10 +1,16 @@
 require 'rails_helper'
 
 describe 'navigate' do
-  before do
-    @user = FactoryGirl.create(:user)
-    login_as(@user, :scope => :user)
+  let(:user) { FactoryGirl.create(:user) }
+
+  let(:post) do
+    Post.create(date: Date.today, rationale: "Rationale", user_id: user.id)
   end
+
+  before do
+    login_as(user, :scope => :user)
+  end
+
   describe 'index' do
     before do
       visit posts_path
@@ -18,10 +24,8 @@ describe 'navigate' do
     end
 
     it 'has a scope so that only post creators can see their posts' do
-      post1 = FactoryGirl.create(:post, user: @user)
       post_from_other_user = FactoryGirl.create(:post, rationale: "This post should not appear", user: FactoryGirl.create(:non_authorized_user))
       visit posts_path
-      expect(page).to have_content(post1.id)
       expect(page).to_not have_content(/This post should not appear/)
     end
 
@@ -62,12 +66,9 @@ describe 'navigate' do
   end
 
   describe 'edit' do
-    before do
-      @post = FactoryGirl.create(:post, user: @user)
-    end
 
     it 'can be edited' do
-      visit edit_post_path(@post)
+      visit edit_post_path(post)
       fill_in 'post[date]', with: Date.today
       fill_in 'post[rationale]', with: "Edited content"
       click_on "Save"
@@ -78,16 +79,21 @@ describe 'navigate' do
       logout(:user)
       non_authorized_user = FactoryGirl.create(:non_authorized_user)
       login_as(non_authorized_user, :scope => :user)
-      visit edit_post_path(@post)
+      visit edit_post_path(post)
       expect(current_path).to eq(root_path)
     end
   end
 
   describe 'delete' do
     it 'can be deleted' do
-      @post = FactoryGirl.create(:post, user: @user)
+      logout(:user)
+
+      delete_user = FactoryGirl.create(:user)
+      login_as(delete_user, :scope => :user)
+
+      post_to_delete = Post.create(date:Date.today, rationale: "some rationale", user: delete_user)
       visit posts_path
-      click_link("delete_post_#{@post.id}_from_index")
+      click_link("delete_post_#{post_to_delete.id}_from_index")
       expect(page.status_code).to eq(200)
     end
   end
